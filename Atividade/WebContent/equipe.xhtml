@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template.xhtml">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+</h:head>
+
+	<ui:define name="conteudo">
+		<h3>Equipe</h3>
+		<h:form id="frm">
+			<h:messages style="color:red" />
+			<h:panelGrid columns="2">
+				<h:outputText value="Descricão: " />
+				<h:panelGroup>
+					<h:inputText id="inDescricao" value="#{equipeMB.equipe.descricao}"
+						required="true" requiredMessage="Descricao Obrigatório" />
+					<h:message for="inDescricao" />
+				</h:panelGroup>
+									
+			</h:panelGrid>
+
+			<h:commandButton value="Salvar" action="#{equipeMB.salvar}"
+				styleClass="btn btn-success btn-shadow" /> <br /><br />
+
+			<p:dataTable styleClass="table table-striped table-bordered"
+				rendered="#{equipeMB.equipes.size() > 0}"
+				value="#{equipeMB.equipes}" var="equi">
+				
+				
+				<p:column>
+					<f:facet name="header">Descrição</f:facet>#{equi.descricao}</p:column>
+			
+				<p:column>
+					<f:facet name="header">Ações</f:facet>
+					<p:commandButton value="Editar" process="@this" update="@form" styleClass="btn btn-info">
+						<f:setPropertyActionListener value="#{vende}"
+							target="#{equipeMB.equipe}" />
+					</p:commandButton>
+					<p:commandButton action="#{equipeMB.excluir()}" value="Excluir" styleClass="btn btn-danger"
+						process="@this" update="@form">
+						<f:setPropertyActionListener value="#{vende}"
+							target="#{equipeMB.equipe}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

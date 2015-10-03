@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template.xhtml">
+
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+</h:head>
+
+	<ui:define name="conteudo">
+		<h3>Vendedor</h3>
+		<h:form id="frm">
+			<h:messages style="color:red" />
+			<h:panelGrid columns="2">
+				<h:outputText value="Nome: " />
+				<h:panelGroup>
+					<h:inputText id="inNome" value="#{vendedorMB.vendedor.nome}"
+						required="true" requiredMessage="Nome Obrigatório" />
+					<h:message for="inNome" />
+				</h:panelGroup>
+				
+				<h:outputText value="Comissão: " />
+				<h:panelGroup>
+					<h:inputText id="inComissao" value="#{vendedorMB.vendedor.comissao}"
+						required="true" requiredMessage="Comissão Obrigatório" />
+					<h:message for="inComissao" />
+				</h:panelGroup>
+				
+			</h:panelGrid>
+
+		
+
+			<h:commandButton value="Salvar" action="#{vendedorMB.salvar}"
+				styleClass="btn btn-success btn-shadow" /> <br /><br />
+
+			<p:dataTable styleClass="table table-striped table-bordered"
+				rendered="#{vendedorMB.vendedores.size() > 0}"
+				value="#{vendedorMB.vendedores}" var="vende">
+				<p:column>
+					<f:facet name="header">Nome</f:facet>#{vende.nome}</p:column>
+				
+				<p:column>
+					<f:facet name="header">Comissao</f:facet>#{vende.comissao}</p:column>
+			
+				<p:column>
+					<f:facet name="header">Ações</f:facet>
+					<p:commandButton value="Editar" process="@this" update="@form" styleClass="btn btn-info">
+						<f:setPropertyActionListener value="#{vende}"
+							target="#{vendedorMB.vendedor}" />
+					</p:commandButton>
+					<p:commandButton action="#{vendedorMB.excluir()}" value="Excluir" styleClass="btn btn-danger"
+						process="@this" update="@form">
+						<f:setPropertyActionListener value="#{vende}"
+							target="#{vendedorMB.vendedor}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

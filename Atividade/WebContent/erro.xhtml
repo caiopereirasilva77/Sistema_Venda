@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="/template.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form>
+			<h:messages />
+			<h:panelGrid cellpading="2" columns="4">
+
+				<h:outputText value="CPF:" />
+				<h:panelGroup>
+					<h:inputText id="inCpf" value="#{alunoMB.aluno.cpf}"
+						required="true" requiredMessage="CPF Obrigatório" />
+					<h:message for="inCpf" />
+				</h:panelGroup>
+
+				<h:outputText value="Nome:" />
+				<h:panelGroup>
+					<h:inputText id="inNome" value="#{alunoMB.aluno.nome}"
+						required="true" requiredMessage="Nome Obrigatório" />
+					<h:message for="inNome" />
+				</h:panelGroup>
+
+				<h:outputText value="DataNasc: " />
+				<h:panelGroup>
+					<p:calendar id="inData" value="#{alunoMB.aluno.dataNasc}"
+						converterMessage="Data inválida! Dever ser dd/MM/yyyy"
+						pattern="dd/MM/yyyy" />
+					<h:message for="inData" />
+				</h:panelGroup>
+
+				<h:outputText value="Telefone:  " />
+				<h:panelGroup>
+					<h:inputText id="inTelefone" value="#{alunoMB.aluno.telefone}"
+						converter="conversorTelefone"
+						converterMessage="Telefone inválido!" />
+					<h:message for="inTelefone" />
+				</h:panelGroup>
+
+				<h:outputText value="Endereço: " />
+				<h:panelGroup>
+					<h:inputText id="inEndereço" value="#{alunoMB.aluno.endereco}"
+						required="true" requiredMessage="Endereço Obrigatório" />
+					<h:message for="inEndereço" />
+				</h:panelGroup>
+
+				<h:outputText value="Número: " />
+				<h:panelGroup>
+					<h:inputText id="inNúmero" value="#{alunoMB.aluno.numero}" />
+				</h:panelGroup>
+
+				<h:outputText value="Bairro :" />
+				<h:panelGroup>
+					<h:inputText id="inBairro" value="#{alunoMB.aluno.bairro}" />
+				</h:panelGroup>
+
+				<h:outputText value="Complemento :" />
+				<h:panelGroup>
+					<h:inputText id="inComplemento"
+						value="#{alunoMB.aluno.complemento}" />
+				</h:panelGroup>
+
+				<h:outputText value="Cep :" />
+				<h:panelGroup>
+					<h:inputText id="inCep" value="#{alunoMB.aluno.cep}" />
+				</h:panelGroup>
+
+				<h:outputText value="Cidade :" />
+				<h:panelGroup>
+					<h:inputText id="inCidade" value="#{alunoMB.aluno.cidade}" />
+				</h:panelGroup>
+
+				<h:commandButton value="Salvar" action="#{alunoMB.salvar}"
+					styleClass="btn" process="@form" update="@form" />
+
+			</h:panelGrid>
+
+			<br />
+
+			<p:dataTable value="#{alunoMB.alunos}" var="alu">
+				<p:column>#{alu.nome}</p:column>
+				<p:column>#{alu.cpf}</p:column>
+				<p:column>
+
+					<p:commandButton value="Editar" action="#{alunoMB.salvar}"
+						styleClass="btn" process="@this" update="@form">
+						<f:setPropertyActionListener value="#{alu}"
+							target="#{alunoMB.aluno}" />
+					</p:commandButton>
+
+					<p:commandButton action="#{alunoMB.excluir}" value="Excluir"
+						styleClass="btn" process="@this" update="@form">>
+					<f:setPropertyActionListener value="#{alu}"
+							target="#{alunoMB.aluno}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
